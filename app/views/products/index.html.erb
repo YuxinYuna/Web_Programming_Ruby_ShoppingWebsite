@@ -1,0 +1,49 @@
+<div class="header">
+  <div class="user-profile">
+    <% if user_signed_in? %>
+      <!-- Dropdown for logged-in users -->
+      <div class="dropdown">
+        <button class="dropdown-toggle">
+          Welcome, <%= current_user.email %> ▼
+        </button>
+        <div class="dropdown-menu">
+          <%= link_to "Order History", orders_path %><br>
+          <%= link_to "My Cart", carts_path %><br>
+          <%= link_to "Logout", destroy_user_session_path, method: :delete %>
+        </div>
+      </div>
+    <% else %>
+      <!-- Sign In / Sign Up buttons for guests -->
+      <div class="auth-buttons">
+        <%= link_to "Sign In", new_user_session_path, class: "auth-button" %>
+        <%= link_to "Sign Up", new_user_registration_path, class: "auth-button" %>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<h1>My Prefab Shop</h1>
+<div class="products-grid">
+  <% @products.each do |product| %>
+    <%= link_to product_path(product), class: "product-card-link" do %>
+      <div class="product-card">
+        <!-- Product Image -->
+        <% if product.image_url.present? %>
+          <%= image_tag product.image_url, alt: product.name, class: "product-image" %>
+        <% else %>
+          <%= image_tag "placeholder.png", alt: "No Image Available", class: "product-image" %>
+        <% end %>
+
+        <h3 style="margin: 10px;"><%= product.name %></h3>
+        <!-- Truncated Description -->
+        <p class="product-description"><%= product.description %></p>
+        <p><strong>$<%= product.price %></strong></p>
+        <div class="add-to-cart">
+            <%= button_to "Add to Cart", carts_path(product_id: product.id, quantity: 1), method: :post, class: "add-to-cart-button" %>
+        </div>
+        
+      </div>
+
+    <% end %>
+  <% end %>
+</div>

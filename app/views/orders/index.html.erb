@@ -1,0 +1,32 @@
+<h1>Order History</h1>
+
+<% if @orders.any? %>
+  <table>
+    <thead>
+      <tr>
+        <th>Order Number</th>
+        <th>Details</th>
+        <th>Total</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @orders.each do |order| %>
+        <tr>
+          <td><%= order.order_number %></td>
+          <td>
+            <ul>
+              <% order.order_details.each do |item| %>
+                <li><%= item["product_name"] %> (x<%= item["quantity"] %>)</li>
+              <% end %>
+            </ul>
+          </td>
+          <td>$<%= order.total %></td>
+          <td><%= order.status %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <p>No orders found.</p>
+<% end %>

@@ -8,3 +8,163 @@
  *
  * Consider organizing styles into separate files for maintainability.
  */
+/* Header Layout */
+.header {
+  display: flex;
+  justify-content: flex-end; /* Align user profile to the right */
+  padding: 10px;
+  background-color: #f8f8f8;
+  border-bottom: 1px solid #ddd;
+}
+
+/* Authentication Page Container */
+.auth-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #f9f9f9;
+}
+
+/* Card Layout */
+.auth-card {
+  background-color: #fff;
+  padding: 20px 30px;
+  border-radius: 10px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  width: 100%;
+  max-width: 400px;
+}
+
+/* Form Styling */
+.auth-form {
+  margin-top: 20px;
+}
+
+.form-group {
+  margin-bottom: 15px;
+  text-align: left;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.form-input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 14px;
+}
+
+/* Button Styling */
+.auth-button {
+  width: 100%;
+  padding: 10px 15px;
+  font-size: 16px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.auth-button:hover {
+  background-color: #0056b3;
+}
+
+/* Footer Links */
+.auth-footer {
+  margin-top: 20px;
+}
+
+.auth-link {
+  color: #007bff;
+  text-decoration: none;
+}
+
+.auth-link:hover {
+  text-decoration: underline;
+}
+
+
+  
+/* Products Grid Layout */
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); /* 4 items per row */
+  gap: 20px; /* Space between grid items */
+  margin: 20px 0;
+}
+
+/* Product Card */
+.product-card {
+  border: 1px solid #ddd;
+  height: 500px;
+  width: 300px;
+  /* padding: 15px; */
+  border-radius: 10px;
+  text-align: center;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+  transition: transform 0.2s ease;
+  cursor: pointer;
+}
+
+/* Hover Effect */
+.product-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Description Truncation */
+.product-description {
+  display: -webkit-box;
+  -webkit-line-clamp: 2; /* Limit to 2 lines */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin:  10px;
+  height: 2.5em; /* Approximate height for 2 lines */
+}
+
+/* Product Image */
+.product-image {
+  width: 300px;
+  height: 300px;
+  object-fit: cover;
+  border-radius: 10px;
+  margin-bottom: 10px;
+}
+
+/* Clickable Card Link */
+.product-card-link {
+  text-decoration: none;
+  color: inherit;
+}
+.add-to-cart {
+  text-align: center;
+  margin-top: 10px;
+}
+
+.add-to-cart-button {
+  display: inline-block;
+  padding: 8px 12px;
+  font-size: 14px;
+  background-color: #fabd05; /* Green button */
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.add-to-cart-button:hover {
+  background-color: #f57708; /* Darker green on hover */
+}
+  
