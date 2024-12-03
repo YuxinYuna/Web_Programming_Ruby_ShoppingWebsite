@@ -1,32 +1,40 @@
-<h1>Order History</h1>
+<div class="order-history-page">
+  <h1>Order History</h1>
+  
 
-<% if @orders.any? %>
-  <table>
-    <thead>
-      <tr>
-        <th>Order Number</th>
-        <th>Details</th>
-        <th>Total</th>
-        <th>Status</th>
-      </tr>
-    </thead>
-    <tbody>
-      <% @orders.each do |order| %>
-        <tr>
-          <td><%= order.order_number %></td>
-          <td>
-            <ul>
-              <% order.order_details.each do |item| %>
-                <li><%= item["product_name"] %> (x<%= item["quantity"] %>)</li>
-              <% end %>
-            </ul>
-          </td>
-          <td>$<%= order.total %></td>
-          <td><%= order.status %></td>
-        </tr>
-      <% end %>
-    </tbody>
-  </table>
-<% else %>
-  <p>No orders found.</p>
-<% end %>
+  <% if @orders.any? %>
+    <% @orders.each do |order| %>
+      <div class="order-details">
+        <h2>Order Number: <%= order.order_number %></h2>
+        
+        <p><strong>Status:</strong> <%= order.status %></p>
+        <p><strong>Date:</strong> <%= order.created_at %></p>
+
+        <table class="order-details-table">
+          <thead>
+            <tr>
+              <th>Product</th>
+              <th>Price</th>
+              <th>Quantity</th>
+              <th>Subtotal</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @order_details = order.order_details.is_a?(String) ? JSON.parse(order.order_details) : order.order_details %>
+            <% @order_details.each do |item| %>
+              <tr>
+                <td><%= item["name"] %></td>
+                <td><%= number_to_currency(item["price"]) %></td>
+                <td><%= item["quantity"] %></td>
+                <td><%= number_to_currency(item["subtotal"]) %></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+        <p><strong>Total:</strong> <%= number_to_currency(order.total) %></p>
+      </div>
+    <% end %>
+  <% else %>
+    <p>No orders found.</p>
+  <% end %>
+</div>

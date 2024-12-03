@@ -23,5 +23,11 @@ module YuxinShiHw5
     #
     # config.time_zone = "Central Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
+    # # Enable cookies-based session store
+    config.session_store :cookie_store, key: "_yuxin_shop_session"
+
+    # Middleware for sessions
+    config.middleware.use ActionDispatch::Cookies
+    config.middleware.use ActionDispatch::Session::CookieStore
   end
 end

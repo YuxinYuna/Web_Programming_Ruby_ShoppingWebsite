@@ -1,17 +1,6 @@
 <div class="header">
   <div class="user-profile">
     <% if user_signed_in? %>
-      <!-- Dropdown for logged-in users -->
-      <div class="dropdown">
-        <button class="dropdown-toggle">
-          Welcome, <%= current_user.email %> ▼
-        </button>
-        <div class="dropdown-menu">
-          <%= link_to "Order History", orders_path %><br>
-          <%= link_to "My Cart", carts_path %><br>
-          <%= link_to "Logout", destroy_user_session_path, method: :delete %>
-        </div>
-      </div>
     <% else %>
       <!-- Sign In / Sign Up buttons for guests -->
       <div class="auth-buttons">
@@ -34,7 +23,7 @@
           <%= image_tag "placeholder.png", alt: "No Image Available", class: "product-image" %>
         <% end %>
 
-        <h3 style="margin: 10px;"><%= product.name %></h3>
+        <h3><%= product.name %></h3>
         <!-- Truncated Description -->
         <p class="product-description"><%= product.description %></p>
         <p><strong>$<%= product.price %></strong></p>

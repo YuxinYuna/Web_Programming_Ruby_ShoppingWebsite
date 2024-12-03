@@ -1,30 +1,42 @@
 class OrdersController < ApplicationController
-  before_action :authenticate_user! # Require login to place an order
+  before_action :authenticate_user!, only: [:create]
+
+  def index
+    if user_signed_in?
+      @orders = current_user.orders.order(created_at: :desc) # Fetch orders belonging to the logged-in user
+    else
+      @orders =[]
+
+    end
+  end
 
   def create
-    @cart_items = current_user.carts.includes(:product)
-    order_details = @cart_items.map do |item|
-      {
-        product_name: item.product.name,
-        price: item.product.price,
-        quantity: item.quantity
-      }
-    end
+    if current_user.carts.any?
+      # Create a new order
+      order = current_user.orders.create(
+        order_number: SecureRandom.hex(10), # Generate a unique order number
+        total: current_user.carts.sum { |cart| cart.product.price * cart.quantity },
+        status: "Pending"
+      )
 
-    total = @cart_items.sum { |item| item.product.price * item.quantity }
+      # Attach cart items to order details
+      order_details = current_user.carts.map do |cart|
+        {
+          product_id: cart.product.id,
+          name: cart.product.name,
+          price: cart.product.price,
+          quantity: cart.quantity,
+          subtotal: cart.product.price * cart.quantity
+        }
+      end
+      order.update(order_details: order_details.to_json)
 
-    @order = current_user.orders.new(
-      order_number: SecureRandom.hex(10),
-      order_details: order_details,
-      total: total,
-      status: 'pending'
-    )
+      # Clear the cart
+      current_user.carts.destroy_all
 
-    if @order.save
-      @cart_items.destroy_all # Clear the cart after placing the order
-      redirect_to orders_path, notice: 'Order placed successfully!'
+      redirect_to orders_path, notice: "Your order has been placed successfully!"
     else
-      redirect_to carts_path, alert: 'Failed to place the order.'
+      redirect_to carts_path, alert: "Your cart is empty. Add some products to place an order."
     end
   end
 end

@@ -1,0 +1,19 @@
+<div class="product-details-container">
+  <!-- Product Image -->
+  <div class="product-image-section">
+    <% if @product.image_url.present? %>
+      <%= image_tag @product.image_url, alt: @product.name, class: "product-image" %>
+    <% else %>
+      <%= image_tag "placeholder.png", alt: "No Image Available", class: "product-image" %>
+    <% end %>
+  </div>
+
+  <!-- Product Description -->
+  <div class="product-description-section">
+    <h1><%= @product.name %></h1>
+    <p><%= @product.description %></p>
+    <p><strong>Price: $<%= @product.price %></strong></p>
+    <%= button_to "Add to Cart", carts_path(product_id: @product.id, quantity: 1), method: :post, class: "add-to-cart-button" %>
+  </div>
+</div>
+

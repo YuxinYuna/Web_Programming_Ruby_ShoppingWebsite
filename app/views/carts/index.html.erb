@@ -1,6 +1,8 @@
+<div class="cart-page">
 <h1>My Cart</h1>
+
 <% if @cart_items.any? %>
-  <table>
+  <table class="cart-table">
     <thead>
       <tr>
         <th>Product</th>
@@ -11,20 +13,32 @@
       </tr>
     </thead>
     <tbody>
-      <% @cart_items.each do |item| %>
+      <% @cart_items.each_with_index do |item, index| %>
         <tr>
           <td><%= item.product.name %></td>
           <td><%= item.quantity %></td>
           <td>$<%= item.product.price %></td>
           <td>$<%= item.product.price * item.quantity %></td>
           <td>
-            <%= button_to "Remove", cart_path(item), method: :delete %>
+            <% if user_signed_in? %>
+              <%= button_to 'Remove', cart_path(item.id), method: :delete, class: ' add-to-cart-button' %>
+            <% else %>
+              <%= button_to 'Remove', remove_item_carts_path(product_id: item.product.id), method: :delete,class: ' add-to-cart-button' %>
+            <% end %>
           </td>
         </tr>
       <% end %>
     </tbody>
   </table>
+  <div class="cart-actions">
+    <% if user_signed_in? %>
+      <%= button_to 'Place My Order', orders_path, method: :post, class: 'btn btn-primary', data: { confirm: "Are you sure you want to place this order?" } %>
+    <% else %>
+      <%= link_to 'Place My Order', new_user_session_path, class: 'btn btn-primary' %>
+      <p class="text-danger">You need to log in to place an order.</p>
+    <% end %>
+  </div>
 <% else %>
   <p>Your cart is empty.</p>
 <% end %>
-
+</div>

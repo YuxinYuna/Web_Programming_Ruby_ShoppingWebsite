@@ -1,0 +1,177 @@
+/* Main Content Styles */
+.main-content {
+    width: 80%;
+    padding: 20px;
+    box-sizing: border-box;
+  }
+  
+  /* Flash Message Styling */
+  .flash-message {
+    padding: 10px 15px;
+    margin: 10px auto;
+    border-radius: 5px;
+    max-width: 600px;
+    font-size: 14px;
+    text-align: center;
+    animation: fadeOut 2s ease-in-out forwards; /* 4s duration */
+  }
+  
+  /* Flash Message Types */
+  .flash-message.notice {
+    background-color: #e7f3fe;
+    color: #31708f;
+    border: 1px solid #bce8f1;
+  }
+  
+  .flash-message.alert {
+    background-color: #f2dede;
+    color: #a94442;
+    border: 1px solid #ebccd1;
+  }
+  
+  .flash-message.success {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+  }
+  
+  .flash-message.error {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+  }
+  
+  /* Fade Out Animation */
+  @keyframes fadeOut {
+    0% {
+      opacity: 1;
+    }
+    /* 90% {
+      opacity: 0.1;
+    } */
+    100% {
+      opacity: 0;
+      display: none;
+    }
+  }
+
+  /* Products Grid Layout */
+  .products-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); /* 4 items per row */
+    gap: 20px; /* Space between grid items */
+    margin: 20px 0;
+  }
+  
+  /* Product Card */
+  .product-card {
+    border: 1px solid #ddd;
+    height: 100%;
+    width: 100%;
+    /* padding: 15px; */
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+    transition: transform 0.2s ease;
+    cursor: pointer;
+  }
+  
+  /* Hover Effect */
+  .product-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
+  }
+  /* Product Name */
+  .product-card h3 {
+    height: 50px;
+    font-size: 18px; /* Make the title prominent */
+    font-weight: bold;
+    margin: 10px;
+  }
+  
+  /* Description Truncation */
+  .product-description {
+    display: -webkit-box;
+    -webkit-line-clamp: 2; /* Limit to 2 lines */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin:  10px;
+    height: 3em; /* Approximate height for 2 lines */
+  }
+  
+  /* Product Image */
+  .product-image {
+    width: 100%;
+    height: 50%;
+    object-fit: cover;
+    border-radius: 10px;
+    margin-bottom: 10px;
+  }
+  
+  /* Clickable Card Link */
+  .product-card-link {
+    text-decoration: none;
+    color: inherit;
+  }
+  .add-to-cart {
+    text-align: center;
+    margin: 10px;
+  }
+  
+  .add-to-cart-button {
+    display: inline-block;
+    padding: 8px 12px;
+    font-size: 14px;
+    background-color: rgb(250, 189, 5); /* Green button */
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none;
+  }
+  
+  .add-to-cart-button:hover {
+    background-color: #f57708; /* Darker green on hover */
+  }
+  
+  /* Container for Product Details */
+  .product-details-container {
+    display: flex; /* Enables Flexbox */
+    gap: 20px; /* Adds space between image and description */
+    align-items: flex-start; /* Align items to the top */
+    max-width: 100%; /* Restricts width */
+    margin: 0 auto; /* Centers the container */
+    padding: 20px;
+  }
+  
+  /* Product Image Section */
+  .product-image-section {
+    flex: 1; /* Take up 1 part of available space */
+  }
+  
+  .product-image {
+    max-width: 100%; /* Ensures image fits within its container */
+    height: auto;
+    border-radius: 10px;
+  }
+  
+  /* Product Description Section */
+  .product-description-section {
+    flex: 2; /* Take up 2 parts of available space */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  
+  .product-description-section h1 {
+    font-size: 24px;
+    margin-bottom: 15px;
+  }
+  
+  .product-description-section p {
+    font-size: 16px;
+    color: #555;
+    margin-bottom: 15px;
+  }

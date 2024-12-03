@@ -1,6 +1,19 @@
 <div class="auth-container">
   <div class="auth-card">
     <h1>Sign Up</h1>
+    <p>Create an account to start shopping and accessing personalized features.</p>
+
+    <!-- Display Form Errors -->
+    <% if resource.errors.any? %>
+      <div class="form-errors">
+        <ul>
+          <% resource.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
     <%= form_with scope: :user, url: user_registration_path, local: true, class: "auth-form" do |f| %>
       <div class="form-group">
         <%= f.label :email %>

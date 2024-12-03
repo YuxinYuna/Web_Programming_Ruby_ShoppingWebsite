@@ -14,5 +14,9 @@ class ApplicationController < ActionController::Base
 
     session.delete(:cart) # Clear session cart after merging
   end
+  # Redirect to the login page after logout
+  def after_sign_out_path_for(resource_or_scope)
+    new_user_session_path # Devise's login path
+  end
 end
 
