@@ -1,18 +1,21 @@
+<% if flash[:alert] %>
+  <div class="form-errors">
+    <ul>
+      <li><%= flash[:alert] %></li>
+    </ul>
+  </div>
+<% end %>
+<% if flash[:notice] %>
+  <div class="form-notice">
+    <ul>
+      <li><%= flash[:notice] %></li>
+    </ul>
+  </div>
+<% end %>
 <div class="auth-container">
   <div class="auth-card">
     <h1>Sign In</h1>
     <p>Please enter your email and password to sign in.</p>
-
-    <!-- Display Form Errors -->
-    <% if resource.errors.any? %>
-      <div class="form-errors">
-        <ul>
-          <% resource.errors.full_messages.each do |message| %>
-            <li><%= message %></li>
-          <% end %>
-        </ul>
-      </div>
-    <% end %>
 
     <%= form_with scope: :user, url: user_session_path, local: true, class: "auth-form" do |f| %>
       <div class="form-group">
@@ -24,7 +27,7 @@
         <%= f.label :password %>
         <%= f.password_field :password, autocomplete: "current-password", class: "form-input" %>
       </div>
-
+      
       <div class="form-group">
         <%= f.submit "Sign In", class: "auth-button" %>
       </div>

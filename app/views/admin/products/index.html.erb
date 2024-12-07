@@ -1,0 +1,39 @@
+<h1>Product Management</h1>
+
+<%= link_to 'Add New Product', new_admin_product_path, class: 'btn btn-primary mb-4' %>
+
+<% if @products.any? %>
+  <div class="row">
+    <% @products.each do |product| %>
+      <div class="col-md-4">
+        <div class="card mb-4">
+          <!-- Product Image -->
+          <%= image_tag product.image_url.present? ? product.image_url.url : 'placeholder.png', alt: product.name, class: 'card-img-top product-image' %>
+
+          <!-- Card Body -->
+          <div class="card-body">
+            <h5 class="card-title"><%= product.name %></h5>
+            <p class="card-text"><%= truncate(product.description, length: 100) %></p>
+            <p class="card-text"><strong>Price: </strong><%= number_to_currency(product.price) %></p>
+            <p class="card-text"><strong>Stock: </strong><%= product.stock %></p>
+
+            <!-- Action Buttons (Icons) -->
+            <%= link_to admin_product_path(product), class: 'btn btn-info btn-sm' do %>
+              <i class="fas fa-eye"></i> View
+            <% end %>
+
+            <%= link_to edit_admin_product_path(product), class: 'btn btn-warning btn-sm' do %>
+              <i class="fas fa-edit"></i> Edit
+            <% end %>
+
+            <%= form_with model: product, url: admin_product_path(product), method: :delete, data: { turbo: false }, class: 'd-inline' do %>
+              <%= button_to nil, class: 'btn btn-danger btn-sm', data: { confirm: 'Are you sure?' } do %>
+                <i class="fas fa-trash-alt"></i> Delete
+              <% end %>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+<% end %>

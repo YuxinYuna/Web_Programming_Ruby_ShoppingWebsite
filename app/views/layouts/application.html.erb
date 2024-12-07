@@ -1,65 +1,138 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
     <title><%= content_for(:title) || "Yuxin Shi Hw5" %></title>
-    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="mobile-web-app-capable" content="yes">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
-
     <%= yield :head %>
 
-    <%# Enable PWA manifest for installable apps (make sure to enable in config/routes.rb too!) %>
-    <%#= tag.link rel: "manifest", href: pwa_manifest_path(format: :json) %>
-
+    <!-- Favicon and Icons -->
     <link rel="icon" href="/icon.png" type="image/png">
     <link rel="icon" href="/icon.svg" type="image/svg+xml">
     <link rel="apple-touch-icon" href="/icon.png">
 
-    <%# Includes all stylesheet files in app/assets/stylesheets %>
+    <!-- Bootstrap CSS and JS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Rails Assets -->
     <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
     <%= javascript_include_tag "application", "data-turbo-track": "reload" %>
-    <%= csrf_meta_tags %>
+    <%= javascript_importmap_tags %>
   </head>
 
   <body>
-    <% unless devise_controller?%>
-      <div class="layout">
-        <!-- Sidebar (Navigation Bar) -->
-        <nav class="sidebar">
-          <% if user_signed_in?%>
-          <h1 style="margin:20px;">
-            Welcome, <br>
-            <%= current_user.email %> 
-          </h1>
-          <%else%>
-          <h1 style="margin:20px;">Welcome!</h1>
-          <%end%>
-          <ul class="nav-links">
-            <li><strong><%= link_to "Home", products_path, class: "nav-link" %></strong></li>
-            <li><strong><%= link_to "Order History", orders_path, class: "nav-link" %></strong></li>
-            <li><strong><%= link_to "My Cart", carts_path, class: "nav-link" %></strong></li>
-            <li><strong><%= link_to "Logout", destroy_user_session_path, method: :delete, class: "nav-link" %></strong></li>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="<%= root_path %>">My Shop</a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+          aria-controls="navbarNav"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto">
+            <% if user_signed_in? %>
+              <% if current_user.admin? %>
+                <!-- Admin Navigation -->
+                <li class="nav-item">
+                  <%= link_to "Dashboard", admin_dashboard_path, class: "nav-link" %>
+                </li>
+                <li class="nav-item">
+                  <%= link_to "Manage Products", admin_products_path, class: "nav-link" %>
+                </li>
+                <li class="nav-item">
+                  <%= link_to "Manage Orders", admin_orders_path, class: "nav-link" %>
+                </li>
+              <% else %>
+                <!-- Regular User Navigation -->
+                <li class="nav-item">
+                  <%= link_to "Shop", products_path, class: "nav-link" %>
+                </li>
+                <li class="nav-item">
+                  <%= link_to "Order History", orders_path, class: "nav-link" %>
+                </li>
+                <li class="nav-item">
+                  <%= link_to carts_path, class: "nav-link position-relative" do %>
+                    Cart
+                    <% count = 0 %>
+                    <% if session[:cart].present? %>
+                      <% count = session[:cart].sum { |item| item["quantity"] } %>
+                    <% end %>
+                    <% if current_user && current_user.carts.any? %>
+                      <% count += current_user.carts.sum(:quantity) %>
+                    <% end %>
+                    <% if count > 0 %>
+                      <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                        <%= count %>
+                      </span>
+                    <% end %>
+                  <% end %>
+                </li>
+              <% end %>
+              <li class="nav-item">
+                <%= link_to "Logout", destroy_user_session_path, method: :delete, class: "nav-link text-danger" %>
+              </li>
+            <% else %>
+              <!-- Guest Navigation -->
+              <li class="nav-item">
+                <%= link_to "Shop", products_path, class: "nav-link" %>
+              </li>
+              <li class="nav-item">
+                <%= link_to "Order History", orders_path, class: "nav-link" %>
+              </li>
+              <li class="nav-item">
+                <%= link_to carts_path, class: "nav-link position-relative" do %>
+                  Cart
+                  <% count = 0 %>
+                  <% if session[:cart].present? %>
+                    <% count = session[:cart].sum { |item| item["quantity"] } %>
+                  <% end %>
+                  <% if current_user && current_user.carts.any? %>
+                    <% count += current_user.carts.sum(:quantity) %>
+                  <% end %>
+                  <% if count > 0 %>
+                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                      <%= count %>
+                    </span>
+                  <% end %>
+                <% end %>
+              </li>
+              <li class="nav-item">
+                <%= link_to "Sign In", new_user_session_path, class: "nav-link" %>
+              </li>
+              <li class="nav-item">
+                <%= link_to "Sign Up", new_user_registration_path, class: "nav-link" %>
+              </li>
+            <% end %>
           </ul>
-        </nav>
-
-        <!-- Main Content Area -->
-        <div class="main-content">
-          <!-- Flash Messages -->
-          <% flash.each do |type, message| %>
-            <div class="flash-message <%= type %>">
-              <p><%= message %></p>
-            </div>
-          <% end %>
-          <%= yield %> <!-- Main content goes here -->
         </div>
       </div>
-    <%else%>
-      <%= yield %>
-    <%end%>
+    </nav>
 
-    
-    
+    <!-- Flash Messages -->
+    <div class="container mt-3">
+      <% flash.each do |type, message| %>
+        <div class="alert alert-<%= type == "alert" ? "danger" : "success" %> alert-dismissible fade show" role="alert">
+          <%= message %>
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+      <% end %>
+    </div>
+
+    <!-- Main Content -->
+    <div class="container mt-4">
+      <%= yield %>
+    </div>
   </body>
 </html>

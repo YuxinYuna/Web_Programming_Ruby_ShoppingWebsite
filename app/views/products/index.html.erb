@@ -1,38 +1,58 @@
-<div class="header">
-  <div class="user-profile">
-    <% if user_signed_in? %>
-    <% else %>
-      <!-- Sign In / Sign Up buttons for guests -->
-      <div class="auth-buttons">
-        <%= link_to "Sign In", new_user_session_path, class: "auth-button" %>
-        <%= link_to "Sign Up", new_user_registration_path, class: "auth-button" %>
-      </div>
-    <% end %>
-  </div>
-</div>
+<div class="container mt-4">
+  <!-- Header Section -->
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h1 class="text-primary">My Prefab Shop</h1>
 
-<h1>My Prefab Shop</h1>
-<div class="products-grid">
-  <% @products.each do |product| %>
-    <%= link_to product_path(product), class: "product-card-link" do %>
-      <div class="product-card">
-        <!-- Product Image -->
-        <% if product.image_url.present? %>
-          <%= image_tag product.image_url, alt: product.name, class: "product-image" %>
-        <% else %>
-          <%= image_tag "placeholder.png", alt: "No Image Available", class: "product-image" %>
-        <% end %>
-
-        <h3><%= product.name %></h3>
-        <!-- Truncated Description -->
-        <p class="product-description"><%= product.description %></p>
-        <p><strong>$<%= product.price %></strong></p>
-        <div class="add-to-cart">
-            <%= button_to "Add to Cart", carts_path(product_id: product.id, quantity: 1), method: :post, class: "add-to-cart-button" %>
+      <% if user_signed_in? %>
+        <!-- Profile or other links for logged-in users -->
+      <% else %>
+        <!-- Sign In / Sign Up buttons for guests -->
+        <div class="btn-group" role="group">
+          <%= link_to "Sign In", new_user_session_path, class: "btn btn-outline-primary" %>
+          <%= link_to "Sign Up", new_user_registration_path, class: "btn btn-primary" %>
         </div>
-        
-      </div>
+      <% end %>
 
-    <% end %>
-  <% end %>
+  </div>
+
+  <!-- Search Bar -->
+  <div class="row mb-4">
+    <div class="col-12">
+      <%= form_with url: products_path, method: :get, local: true, class: "input-group" do |f| %>
+        <%= f.text_field :query, placeholder: "Search products by name or description...", class: "form-control" %>
+        <button class="btn btn-outline-secondary" type="submit">Search</button>
+      <% end %>
+    </div>
+  </div>
+
+  <!-- Products Grid -->
+  <div class="row">
+    <% if @products.any?%>
+    
+      <% @products.each do |product| %>
+        <div class="col-md-4 mb-4">
+          <div class="card h-100">
+            <% if product.image_url.present? %>
+              <%= image_tag product.image_url.url, alt: product.name, class: "card-img-top" %>
+            <% else %>
+              <%= image_tag "placeholder.png", alt: "No Image Available", class: "card-img-top" %>
+            <% end %>
+            <div class="card-body">
+              <h5 class="card-title"><%= product.name %></h5>
+              <p class="card-text text-truncate"><%= product.description %></p>
+              <p class="text-primary fw-bold">$<%= product.price %></p>
+            </div>
+            <div class="card-footer d-flex justify-content-between align-items-center">
+              <%= link_to "Details", product_path(product), class: "btn btn-sm btn-outline-primary" %>
+              <%= button_to "Add to Cart", carts_path(product_id: product.id, quantity: 1), method: :post, class: "btn btn-sm btn-primary" %>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    <%else%>
+      <div class="col-12">
+        <p class="text-center text-muted">No results found for "<%= params[:query] %>".</p>
+      </div>
+    <% end%>
+  </div>
 </div>

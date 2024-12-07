@@ -1,0 +1,27 @@
+<h1>Order Management</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>User</th>
+      <th>Total Price</th>
+      <th>Status</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @orders.each do |order| %>
+      <tr>
+        <td><%= order.order_number %></td>
+        <td><%= order.user.email %></td>
+        <td><%= number_to_currency(order.total) %></td>
+        <td><%= order.status %></td>
+        <td>
+          <%= link_to 'View', admin_order_path(order), class: 'btn btn-secondary' %>
+          <%= link_to 'Delete', admin_order_path(order), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

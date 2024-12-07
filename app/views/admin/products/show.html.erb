@@ -12,8 +12,16 @@
   <div class="product-description-section">
     <h1><%= @product.name %></h1>
     <p><%= @product.description %></p>
+    <p><strong>Stock: $<%= @product.stock %></strong></p>
     <p><strong>Price: $<%= @product.price %></strong></p>
-    <%= button_to "Add to Cart", carts_path(product_id: @product.id, quantity: 1), method: :post, class: "add-to-cart-button" %>
+    <div>
+        <%= link_to 'Edit', edit_admin_product_path(@product), class: 'btn btn-secondary' %>
+        <%= form_with model: @product, url: admin_product_path(@product), method: :delete, data: { confirm: 'Are you sure?' }, class: 'd-inline' do %>
+            <%= submit_tag 'Delete', class: 'btn btn-danger', data: { confirm: 'Are you sure?' } %>
+        <% end %>
+
+    </div>
   </div>
+  <%= link_to 'Back to Products', admin_products_path, class: 'btn btn-secondary' %>
 </div>
 
