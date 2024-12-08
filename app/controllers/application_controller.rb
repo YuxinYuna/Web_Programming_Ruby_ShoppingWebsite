@@ -1,5 +1,6 @@
 class ApplicationController < ActionController::Base
   before_action :configure_permitted_parameters, if: :devise_controller?
+  before_action :set_cart_items
 
 
   protected
@@ -41,5 +42,22 @@ class ApplicationController < ActionController::Base
     end
 
     session.delete(:cart) # Clear session cart after merging
+  end
+
+  def set_cart_items
+    if user_signed_in?
+      @cart_items = current_user.carts.includes(:product)
+    else
+      @cart_items = (session[:cart] || []).map do |item|
+        product = Product.find_by(id: item["product_id"])
+        next unless product
+
+        OpenStruct.new(
+          id: item["product_id"],
+          product: product,
+          quantity: item["quantity"]
+        )
+      end.compact
+    end
   end
 end

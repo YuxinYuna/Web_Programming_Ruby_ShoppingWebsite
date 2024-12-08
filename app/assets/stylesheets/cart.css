@@ -1,0 +1,46 @@
+/* Modal - Positioned to the right */
+/*
+ * This is a manifest file that'll be compiled into application.css.
+ *
+ * With Propshaft, assets are served efficiently without preprocessing steps. You can still include
+ * application-wide styles in this file, but keep in mind that CSS precedence will follow the standard
+ * cascading order, meaning styles declared later in the document or manifest will override earlier ones,
+ * depending on specificity.
+ *
+ * Consider organizing styles into separate files for maintainability.
+ */
+/* Header Layout */
+
+
+.modal-right .modal-dialog {
+  position: fixed;
+  top: 0;
+  right: 0;
+  margin: 0;
+  width: 400px; /* Adjust width to your preference */
+  height: 100%;
+  max-width: none;
+  transform: translateX(100%);
+  transition: transform 0.3s ease-in-out;
+}
+
+/* When the modal is shown, slide it in */
+.modal-right.show .modal-dialog {
+  transform: translateX(0);
+}
+
+/* Add custom backdrop to cover the rest of the page */
+.modal-backdrop.show {
+  background-color: rgba(0, 0, 0, 0.5);
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1040; /* Below the modal */
+}
+
+/* Optional: Style the modal header, body, and footer to match the theme */
+.modal-header, .modal-body, .modal-footer {
+  background-color: #f7f2f2;
+}

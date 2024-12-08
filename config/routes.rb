@@ -7,7 +7,7 @@ Rails.application.routes.draw do
     resources :products
     resources :orders
   end
-  
+
   devise_scope :user do
     get "users/sign_out", to: "devise/sessions#destroy"
   end
@@ -17,6 +17,9 @@ Rails.application.routes.draw do
   # Additional routes for resources
   resources :products, only: [ :index, :show ]
   resources :carts, only: [ :index, :create, :destroy ] do
+    member do
+      patch :update
+    end
     delete "remove_item", on: :collection # Custom route for guests using product_id
   end
   resources :orders, only: [ :index, :create ]

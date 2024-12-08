@@ -1,48 +1,45 @@
-  <% if resource.errors.any? %>
-    <div class="form-errors">
-      <ul>
-        <% resource.errors.full_messages.each do |message| %>
-          <li><%= message %></li>
-        <% end %>
-      </ul>
-    </div>
-  <% end %>
+<% if resource.errors.any? %>
+  <div class="alert alert-danger">
+    <ul>
+      <% resource.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
 <div class="auth-container">
-  <div class="auth-card">
-    <h1>Sign Up</h1>
-    <p>Create an account to start shopping and accessing personalized features.</p>
-
-    <!-- Display Form Errors -->
-
+  <div class="auth-card p-4 shadow-sm rounded-3">
+    <h1 class="text-center">Sign Up</h1>
+    <p class="text-center">Create an account to start shopping and accessing personalized features.</p>
 
     <%= form_with scope: :user, url: user_registration_path, local: true, class: "auth-form" do |f| %>
-      <div class="form-group">
-        <%= f.label :email %>
-        <%= f.email_field :email, autofocus: true, class: "form-input" %>
+      <div class="mb-3">
+        <%= f.label :email, class: "form-label" %>
+        <%= f.email_field :email, autofocus: true, class: "form-control" %>
       </div>
 
-      <div class="form-group">
-        <%= f.label :password %>
-        <%= f.password_field :password, autocomplete: "new-password", class: "form-input" %>
+      <div class="mb-3">
+        <%= f.label :password, class: "form-label" %>
+        <%= f.password_field :password, autocomplete: "new-password", class: "form-control" %>
       </div>
 
-      <div class="form-group">
-        <%= f.label :password_confirmation %>
-        <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "form-input" %>
+      <div class="mb-3">
+        <%= f.label :password_confirmation, class: "form-label" %>
+        <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "form-control" %>
       </div>
 
-      <div class="form-group">
-        <%= f.check_box :admin %>
-        <%= f.label :admin, "Check this if you are an admin" %>
+      <div class="form-check mb-3">
+        <%= f.check_box :admin, class: "form-check-input" %>
+        <%= f.label :admin, "Check this if you are an admin", class: "form-check-label" %>
       </div>
 
-      <div class="form-group">
-        <%= f.submit "Sign Up", class: "auth-button" %>
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <%= f.submit "Sign Up", class: "theme-button btn btn-primary w-100" %>
       </div>
     <% end %>
 
-    <div class="auth-footer">
-      <p>Already have an account? <%= link_to "Sign In", new_user_session_path, class: "auth-link" %></p>
+    <div class="auth-footer text-center mt-3">
+      <p>Already have an account? <%= link_to "Sign In", new_user_session_path, class: "auth-link text-decoration-none" %></p>
     </div>
   </div>
 </div>

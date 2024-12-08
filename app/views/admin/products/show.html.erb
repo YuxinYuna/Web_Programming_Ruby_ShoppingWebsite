@@ -1,27 +1,40 @@
-<div class="product-details-container">
-  <!-- Product Image -->
-  <div class="product-image-section">
-    <% if @product.image_url.present? %>
-      <%= image_tag @product.image_url.url, alt: @product.name, class: "product-image" %>
-    <% else %>
-      <%= image_tag "placeholder.png", alt: "No Image Available", class: "product-image" %>
-    <% end %>
-  </div>
+<div class="container py-5">
+  <!-- Product Details Card -->
+  <div class="card shadow-lg">
+    <div class="row g-0">
+      <!-- Product Image Section -->
+      <div class="col-md-4">
+        <div class="p-3">
+          <% if @product.image_url.present? %>
+            <%= image_tag @product.image_url.url, alt: @product.name, class: "img-fluid rounded" %>
+          <% else %>
+            <%= image_tag "placeholder.png", alt: "No Image Available", class: "img-fluid rounded" %>
+          <% end %>
+        </div>
+      </div>
 
-  <!-- Product Description -->
-  <div class="product-description-section">
-    <h1><%= @product.name %></h1>
-    <p><%= @product.description %></p>
-    <p><strong>Stock: $<%= @product.stock %></strong></p>
-    <p><strong>Price: $<%= @product.price %></strong></p>
-    <div>
-        <%= link_to 'Edit', edit_admin_product_path(@product), class: 'btn btn-secondary' %>
-        <%= form_with model: @product, url: admin_product_path(@product), method: :delete, data: { confirm: 'Are you sure?' }, class: 'd-inline' do %>
-            <%= submit_tag 'Delete', class: 'btn btn-danger', data: { confirm: 'Are you sure?' } %>
-        <% end %>
-
+      <!-- Product Description Section -->
+      <div class="col-md-8">
+        <div class="card-body">
+          <h1 class="card-title"><%= @product.name %></h1>
+          <p class="card-text text-muted"><%= @product.description %></p>
+          <p class="card-text">
+            <strong>Stock:</strong> <%= @product.stock %><br>
+            <strong>Price:</strong> $<%= @product.price %>
+          </p>
+          <div class="mt-4">
+            <%= link_to 'Edit', edit_admin_product_path(@product), class: 'btn btn-primary me-2' %>
+            <%= form_with model: @product, url: admin_product_path(@product), method: :delete, data: { confirm: 'Are you sure?' }, class: 'd-inline' do %>
+              <%= submit_tag 'Delete', class: 'btn btn-danger' %>
+            <% end %>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
-  <%= link_to 'Back to Products', admin_products_path, class: 'btn btn-secondary' %>
-</div>
 
+  <!-- Back to Products Button -->
+  <div class="text-center mt-4">
+    <%= link_to 'Back to Products', admin_products_path, class: 'btn btn-secondary' %>
+  </div>
+</div>

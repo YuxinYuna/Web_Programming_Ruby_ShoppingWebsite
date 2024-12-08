@@ -1,11 +1,12 @@
 <h1>Order Management</h1>
 
-<table>
+<table class="table table-striped">
   <thead>
     <tr>
       <th>ID</th>
       <th>User</th>
       <th>Total Price</th>
+      <th>Created At</th>
       <th>Status</th>
       <th>Actions</th>
     </tr>
@@ -16,12 +17,73 @@
         <td><%= order.order_number %></td>
         <td><%= order.user.email %></td>
         <td><%= number_to_currency(order.total) %></td>
+        <td><%= order.created_at.strftime("%B %d, %Y %H:%M") %></td>
         <td><%= order.status %></td>
         <td>
-          <%= link_to 'View', admin_order_path(order), class: 'btn btn-secondary' %>
-          <%= link_to 'Delete', admin_order_path(order), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %>
+          <div class="d-flex justify-content-start align-items-center">
+            <!-- View Button with Icon -->
+            <button type="button" class="btn btn-secondary me-2" data-bs-toggle="modal" data-bs-target="#orderModal<%= order.id %>">
+            <i class="bi bi-eye"></i> <!-- Bootstrap Eye Icon -->
+            </button>
+            
+            <!-- Delete Button with Icon -->
+            <%= button_to admin_order_path(order), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' do %>
+            <i class="bi bi-trash"></i> <!-- Bootstrap Trash Icon -->
+            <% end %>
+        </div>
         </td>
       </tr>
+
+      <!-- Modal for View Order Details -->
+      <div class="modal fade" id="orderModal<%= order.id %>" tabindex="-1" aria-labelledby="orderModalLabel<%= order.id %>" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="orderModalLabel<%= order.id %>">Order Details - <%= order.order_number %></h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <!-- Order Information Section -->
+              <div class="row mb-3">
+                <div class="col-12 col-md-6">
+                  <p><strong>User:</strong> <%= order.user.email %></p>
+                  <p><strong>Total Price:</strong> <%= number_to_currency(order.total) %></p>
+                  <p><strong>Status:</strong> <%= order.status %></p>
+                  <p><strong>Created At:</strong> <%= order.created_at.strftime("%B %d, %Y %H:%M") %></p>
+                </div>
+              </div>
+
+              <!-- Order Items Section -->
+              <div class="row">
+                <div class="col-12">
+                  <h5><strong>Items:</strong></h5>
+                  <div class="row">
+                    <% @order_details = order.order_details.is_a?(String) ? JSON.parse(order.order_details) : order.order_details %>
+                    <% @order_details.each do |item| %>
+                      <div class="col-12 col-md-6 mb-3">
+                        <div class="d-flex align-items-start">
+                          <div class="me-3">
+                            <%= image_tag item["image"].present? ? item["image"] : "placeholder.png", alt: item["name"], class: "order-item-image", style: "width: 100px; height: 100px; object-fit: cover;" %>
+                          </div>
+                          <div>
+                            <strong><%= item["name"] %></strong><br>
+                            <span>Price: <%= number_to_currency(item["price"]) %></span><br>
+                            <span>Quantity: <%= item["quantity"] %></span><br>
+                            <span>Subtotal: <%= number_to_currency(item["subtotal"]) %></span>
+                          </div>
+                        </div>
+                      </div>
+                    <% end %>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
     <% end %>
   </tbody>
 </table>

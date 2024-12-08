@@ -58,13 +58,37 @@ class CartsController < ApplicationController
 
       session[:cart] ||= []
       session[:cart].reject! { |item| item["product_id"] == params[:product_id].to_s }
-      redirect_to carts_path, notice: "Item removed from your cart!"
+      redirect_to products_path, notice: "Item removed from your cart!"
     end
   end
 
   def remove_item
     session[:cart] ||= []
     session[:cart].reject! { |item| item["product_id"] == params[:product_id] }
-    redirect_to carts_path, notice: "Item removed from your cart."
+    redirect_to products_path, notice: "Item removed from your cart."
+  end
+
+  def update
+    if user_signed_in?
+      # Update the quantity of a cart item for logged-in users
+      @cart_item = current_user.carts.find(params[:id])
+      if @cart_item.update(quantity: params[:quantity].to_i)
+        flash[:notice] = "Cart updated successfully."
+      else
+        flash[:alert] = "Unable to update cart."
+      end
+    else
+      # Update the quantity in session for unauthenticated users
+      session[:cart] ||= []
+      cart_item = session[:cart].find { |item| item["product_id"] == params[:id].to_s }
+      if cart_item
+        cart_item["quantity"] = params[:quantity].to_i
+        flash[:notice] = "Cart updated successfully. Log in to place an order."
+      else
+        flash[:alert] = "Item not found in your cart."
+      end
+    end
+
+    redirect_to products_path
   end
 end

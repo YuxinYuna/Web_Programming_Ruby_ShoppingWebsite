@@ -1,45 +1,50 @@
-<h1>Edit Product</h1>
+<div class="container mt-4">
+  <h1 class="mb-4">Edit Product</h1>
 
-<%= form_with(model: @product, url: admin_product_path(@product), method: :patch, local: true, html: { multipart: true }) do |f| %>
-  <% if @product.errors.any? %>
-    <div class="form-errors">
-      <h2><%= pluralize(@product.errors.count, "error") %> prohibited this product from being saved:</h2>
-      <ul>
-        <% @product.errors.full_messages.each do |message| %>
-          <li><%= message %></li>
-        <% end %>
-      </ul>
+  <%= form_with(model: @product, url: admin_product_path(@product), method: :patch, local: true, html: { multipart: true }) do |f| %>
+    <% if @product.errors.any? %>
+      <div class="alert alert-danger">
+        <h4 class="alert-heading"><%= pluralize(@product.errors.count, "error") %> prohibited this product from being saved:</h4>
+        <ul>
+          <% @product.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <div class="row">
+      <div class="col-md-6 mb-3">
+        <%= f.label :name, class: 'form-label' %>
+        <%= f.text_field :name, class: 'form-control', placeholder: "Enter product name" %>
+      </div>
+
+      <div class="col-md-6 mb-3">
+        <%= f.label :price, class: 'form-label' %>
+        <%= f.number_field :price, step: 0.01, class: 'form-control', placeholder: "Enter price" %>
+      </div>
+    </div>
+
+    <div class="mb-3">
+      <%= f.label :description, class: 'form-label' %>
+      <%= f.text_area :description, class: 'form-control', rows: 4, placeholder: "Enter product description" %>
+    </div>
+
+    <div class="row">
+      <div class="col-md-6 mb-3">
+        <%= f.label :stock, class: 'form-label' %>
+        <%= f.number_field :stock, class: 'form-control', placeholder: "Enter stock quantity" %>
+      </div>
+
+      <div class="col-md-6 mb-3">
+        <%= f.label :image_url, 'Upload Image', class: 'form-label' %>
+        <%= f.file_field :image_url, class: 'form-control' %>
+      </div>
+    </div>
+
+    <div class="d-flex justify-content-between">
+      <%= f.submit 'Save Changes', class: ' theme-button btn btn-primary' %>
+      <%= link_to 'Back to Products', admin_products_path, class: 'btn btn-secondary' %>
     </div>
   <% end %>
-
-  <div class="form-group">
-    <%= f.label :name %>
-    <%= f.text_field :name, class: 'form-control' %>
-  </div>
-
-  <div class="form-group">
-    <%= f.label :description %>
-    <%= f.text_area :description, class: 'form-control' %>
-  </div>
-
-  <div class="form-group">
-    <%= f.label :price %>
-    <%= f.number_field :price, step: 0.01, class: 'form-control' %>
-  </div>
-
-  <div class="form-group">
-    <%= f.label :stock %>
-    <%= f.number_field :stock, class: 'form-control' %>
-  </div>
-
-  <div class="form-group">
-    <%= f.label :image_url, 'Upload Image' %>
-    <%= f.file_field :image_url, class: 'form-control-file' %>
-  </div>
-
-  <div class="form-group">
-    <%= f.submit class: 'btn btn-primary' %>
-  </div>
-<% end %>
-
-<%= link_to 'Back to Products', admin_products_path, class: 'btn btn-secondary' %>
+</div>

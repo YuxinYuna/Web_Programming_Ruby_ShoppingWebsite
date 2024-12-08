@@ -1,0 +1,35 @@
+/* Order history page styling */
+.order-history-page {
+  font-family: Arial, sans-serif;
+  color: #333;
+}
+
+.order-summary .card-body {
+  background-color: #f9f9f9;
+  padding: 1.5rem;
+}
+
+.order-summary .card-title {
+  font-size: 1.2rem;
+  margin-bottom: 0.75rem;
+}
+
+.order-summary p {
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.order-summary button {
+  margin-top: 1rem;
+  width: 100%;
+}
+
+.table td, .table th {
+  vertical-align: middle;
+}
+.order-item-image {
+  width: 50px; /* Adjust size as needed */
+  height: 50px;
+  object-fit: cover;
+  border-radius: 5px;
+}

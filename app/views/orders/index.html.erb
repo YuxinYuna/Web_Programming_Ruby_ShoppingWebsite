@@ -1,37 +1,56 @@
-<div class="order-history-page">
+<div class="order-history-page container mt-5">
   <h1>Order History</h1>
-  
 
   <% if @orders.any? %>
     <% @orders.each do |order| %>
-      <div class="order-details">
-        <h2>Order Number: <%= order.order_number %></h2>
-        
-        <p><strong>Status:</strong> <%= order.status %></p>
-        <p><strong>Date:</strong> <%= order.created_at %></p>
+      <div class="order-summary card mb-4">
+        <div class="card-body">
+          <h5 class="card-title">Order Number: <%= order.order_number %></h5>
+          <p><strong>Status:</strong> <%= order.status %></p>
+          <p><strong>Time:</strong> <%= order.created_at %></p>
+          <p><strong>Total:</strong> <%= number_to_currency(order.total) %></p>
+          
+          <!-- Button to toggle order details -->
+          <button class="theme-button btn btn-primary" data-bs-toggle="collapse" data-bs-target="#orderDetails<%= order.id %>" aria-expanded="false" aria-controls="orderDetails<%= order.id %>">
+            View Details
+          </button>
+        </div>
 
-        <table class="order-details-table">
-          <thead>
-            <tr>
-              <th>Product</th>
-              <th>Price</th>
-              <th>Quantity</th>
-              <th>Subtotal</th>
-            </tr>
-          </thead>
-          <tbody>
-            <% @order_details = order.order_details.is_a?(String) ? JSON.parse(order.order_details) : order.order_details %>
-            <% @order_details.each do |item| %>
-              <tr>
-                <td><%= item["name"] %></td>
-                <td><%= number_to_currency(item["price"]) %></td>
-                <td><%= item["quantity"] %></td>
-                <td><%= number_to_currency(item["subtotal"]) %></td>
-              </tr>
-            <% end %>
-          </tbody>
-        </table>
-        <p><strong>Total:</strong> <%= number_to_currency(order.total) %></p>
+        <!-- Order Details - initially collapsed -->
+        <div class="collapse" id="orderDetails<%= order.id %>">
+          <div class="card-body">
+            <table class="table table-bordered">
+              <thead>
+                <tr>
+                  <th>Product</th>
+                  <th>Image</th>
+                  <th>Price</th>
+                  <th>Quantity</th>
+                  <th>Subtotal</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% @order_details = order.order_details.is_a?(String) ? JSON.parse(order.order_details) : order.order_details %>
+                <% @order_details.each do |item| %>
+                  <tr>
+                    <td><%= item["name"] %></td>
+                    <!-- Thumbnail for product image -->
+                    <td>
+                      <% if item["image"].present? %>
+                        <%= image_tag item["image"], alt: item["name"], class: "order-item-image" %>
+                      <% else %>
+                        <%= image_tag "placeholder.png", alt: "No Image Available", class: "order-item-image" %>
+                      <% end %>
+                    </td>
+                    <td><%= number_to_currency(item["price"]) %></td>
+                    <td><%= item["quantity"] %></td>
+                    <td><%= number_to_currency(item["subtotal"]) %></td>
+                  </tr>
+                <% end %>
+              </tbody>
+            </table>
+          </div>
+        </div>
       </div>
     <% end %>
   <% else %>
