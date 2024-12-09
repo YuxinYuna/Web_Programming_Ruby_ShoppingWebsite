@@ -22,6 +22,20 @@ class CartsController < ApplicationController
   end
 
   def create
+    # Find the product using the product_id from the params
+    product = Product.find_by(id: params[:product_id])
+
+    if product.nil?
+      flash[:alert] = "Product not found."
+      redirect_to products_path and return
+    end
+
+    # Check if the selected quantity exceeds the available stock
+    if params[:quantity].to_i > product.stock
+      flash[:alert] = "Sorry, we only have #{product.stock} items in stock."
+      redirect_to product_path(product) and return
+    end
+
     if user_signed_in?
       # Store cart item in the database for logged-in users
       @cart = current_user.carts.find_or_initialize_by(product_id: params[:product_id])
@@ -69,6 +83,8 @@ class CartsController < ApplicationController
   end
 
   def update
+
+
     if user_signed_in?
       # Update the quantity of a cart item for logged-in users
       @cart_item = current_user.carts.find(params[:id])

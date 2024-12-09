@@ -17,6 +17,7 @@
         <h1 class="product-title"><%= @product.name %></h1>
         <p><%= @product.description %></p>
         <p><strong>Price: $<%= @product.price %></strong></p>
+        <p><strong>Stock: <%= @product.stock %></strong></p>
       </div>
 
       <!-- Buttons at the bottom -->
@@ -24,7 +25,7 @@
         <!-- Add to Cart Button -->
         <%= form_with url: carts_path, method: :post, local: true, class: "d-flex align-items-center" do |f| %>
           <%= f.hidden_field :product_id, value: @product.id %>
-          <%= f.number_field :quantity, value: 1, min: 1, class: "form-control me-2", style: "width: 60px;" %>
+          <%= f.number_field :quantity, value: 1, min: 1,max: @product.stock, class: "form-control me-2", style: "width: 60px;" %>
           <%= f.submit "Add to Cart", class: "theme-button btn btn-sm btn-outline-primary ms-2" %>
         <% end %>
         <!-- Back Button -->

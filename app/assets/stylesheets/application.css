@@ -7,6 +7,16 @@
   background-color: #a90606;
   color:white;
 }
+
+.theme-button:active, .theme-button:focus {
+  background-color: #a90606; /* Keep the hover color when clicked */
+  outline: none; /* Remove the default focus outline if needed */
+}
+
+/* Optionally, for focus state only (accessibility purposes) */
+.theme-button:focus {
+  box-shadow:none; /* Light blue outline for focus */
+}
 .auth-link {
   color: #007bff;
 }

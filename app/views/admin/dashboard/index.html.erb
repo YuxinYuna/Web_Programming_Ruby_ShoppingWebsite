@@ -1,4 +1,65 @@
-<div class="header">
-    <h1>Admin Dashboard</h1>
-</div>
+<div class="container-fluid mt-5">
+  <!-- Statistics Cards -->
+  <div class="row">
+    <div class="col-md-3 col-sm-6 mb-4">
+      <div class="card bg-primary text-white shadow-sm hover-animate">
+        <div class="card-body text-center">
+          <h5 class="card-title">Total Revenue</h5>
+          <h3 id="totalRevenue" class="display-4">$25790</h3>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3 col-sm-6 mb-4">
+      <div class="card bg-info text-white shadow-sm hover-animate">
+        <div class="card-body text-center">
+          <h5 class="card-title">Total Products</h5>
+          <h3 id="totalProducts" class="display-4">25</h3>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3 col-sm-6 mb-4">
+      <div class="card bg-danger text-white shadow-sm hover-animate">
+        <div class="card-body text-center">
+          <h5 class="card-title">Total Customers</h5>
+          <h3 id="totalCustomers" class="display-4">2350</h3>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3 col-sm-6 mb-4">
+      <div class="card bg-success text-white shadow-sm hover-animate">
+        <div class="card-body text-center">
+          <h5 class="card-title">Total Orders</h5>
+          <h3 id="totalOrders" class="display-4">3420</h3>
+        </div>
+      </div>
+    </div>
+  </div>
 
+  <!-- Charts Section -->
+  <div class="row">
+    <div class="col-md-6 mb-4">
+      <div id="pieChart" class="chart-container"></div>
+    </div>
+    <div class="col-md-6 mb-4">
+      <!-- Top Selling Products Chart -->
+      <div class="card shadow-sm border-dark">
+        <div class="card-body">
+          <h5 class="card-title text-center">Top Selling Products</h5>
+          <div id="topSellingChart" class="chart-container"></div> <!-- Chart container -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-12 mb-4">
+      <div id="lineChart" class="chart-container"></div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-12 mb-4">
+      <div id="barChart" class="chart-container"></div>
+    </div>
+  </div>
+</div>

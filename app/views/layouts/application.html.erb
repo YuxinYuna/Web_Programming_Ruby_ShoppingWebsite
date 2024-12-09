@@ -23,6 +23,7 @@
     <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
     <%= javascript_include_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
+    <script type="module" src="<%= asset_path 'application.js' %>"></script>
   </head>
 
   <body>
@@ -93,6 +94,23 @@
               </li>
             <% else %>
               <li class="nav-item">
+                <button type="button" class="nav-link position-relative btn btn-link" data-bs-toggle="modal" data-bs-target="#cartModal">
+                  Cart
+                  <% count = 0 %>
+                  <% if session[:cart].present? %>
+                    <% count = session[:cart].sum { |item| item["quantity"] } %>
+                  <% end %>
+                  <% if current_user && current_user.carts.any? %>
+                    <% count += current_user.carts.sum(:quantity) %>
+                  <% end %>
+                  <% if count > 0 %>
+                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                      <%= count %>
+                    </span>
+                  <% end %>
+                </button>
+              </li>
+              <li class="nav-item">
                 <%= link_to "Sign In", new_user_session_path, class: "nav-link" %>
               </li>
               <li class="nav-item">
@@ -154,7 +172,7 @@
                       <td>
                         <%= form_with url: cart_path(item.id), method: :patch, local: true do |f| %>
                           <div class="input-group">
-                            <%= f.number_field :quantity, value: item.quantity, min: 1, class: "form-control", style: "width: 60px;" %>
+                            <%= f.number_field :quantity, value: item.quantity, min: 1, max: item.product.stock, class: "form-control", style: "width: 60px;" %>
                             <button type="submit" class="theme-button btn btn-outline-primary">Update</button>
                           </div>
                         <% end %>
