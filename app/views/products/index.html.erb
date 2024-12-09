@@ -23,9 +23,9 @@
         <div class="col-md-4 mb-4">
           <div class="card h-100">
             <% if product.image_url.present? %>
-              <%= image_tag product.image_url.url, alt: product.name, class: "card-img-top" %>
+              <%= image_tag product.image_url.url, alt: product.name, class: "card-img-top product-image" %>
             <% else %>
-              <%= image_tag "placeholder.png", alt: "No Image Available", class: "card-img-top" %>
+              <%= image_tag "placeholder.png", alt: "No Image Available", class: "card-img-top product-image" %>
             <% end %>
             <div class="card-body">
               <h5 class="card-title"><%= product.name %></h5>

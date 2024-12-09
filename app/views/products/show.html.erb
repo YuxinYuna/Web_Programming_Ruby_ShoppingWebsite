@@ -3,9 +3,9 @@
     <!-- Product Image Section -->
     <div class="col-md-6 product-image-section">
       <% if @product.image_url.present? %>
-        <%= image_tag @product.image_url.url, alt: @product.name, class: "img-fluid product-image" %>
+        <%= image_tag @product.image_url.url, alt: @product.name, class: "img-fluid " %>
       <% else %>
-        <%= image_tag "placeholder.png", alt: "No Image Available", class: "img-fluid product-image" %>
+        <%= image_tag "placeholder.png", alt: "No Image Available", class: "img-fluid " %>
       <% end %>
     </div>
 

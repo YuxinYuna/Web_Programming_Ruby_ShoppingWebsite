@@ -20,7 +20,7 @@
 
       <div class="mb-3">
         <%= f.label :password, class: "form-label" %>
-        <%= f.password_field :password, autocomplete: "new-password", class: "form-control" %>
+        <%= f.password_field :password, autocomplete: "new-password", class: "form-control", minlength: 8 %>
       </div>
 
       <div class="mb-3">
