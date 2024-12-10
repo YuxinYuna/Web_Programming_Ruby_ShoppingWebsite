@@ -31,7 +31,16 @@
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
       <div class="container-fluid">
-        <h1><strong><a class="navbar-brand" href="<%= root_path %>">My Prefab Shop</a></strong></h1>
+        <% if user_signed_in? %>
+              <% if current_user.admin? %>
+                <h1><strong><a class="navbar-brand" href="<%= admin_dashboard_path %>">My Prefab Shop</a></strong></h1>
+              <%else%>
+                <h1><strong><a class="navbar-brand" href="<%= root_path %>">My Prefab Shop</a></strong></h1>
+              <%end%>
+        <%else%>
+            <h1><strong><a class="navbar-brand" href="<%= root_path %>">My Prefab Shop</a></strong></h1>
+        <%end%>
+
         <button
           class="navbar-toggler"
           type="button"
