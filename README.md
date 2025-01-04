@@ -1,6 +1,6 @@
 # README
 
-#### This is 278 Web-Programming project, using ruby and rails framework and the front-end uses bootstrap and ApexChart. In general this is an e-commerce platform selling prepared dishes, there are two roles of user: customer(including guest and signed-in customer) and administrator:
+#### This is 278 Web-Programming project, using ruby on rails framework and the front-end uses bootstrap and ApexChart. In general, this is an e-commerce platform selling prepared dishes, there are two roles of user: customer(including guest and signed-in customer) and administrator:
 
 To run the application:
 ```
