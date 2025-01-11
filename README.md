@@ -1,18 +1,20 @@
 # README
 
-#### This is 278 Web-Programming project, using ruby on rails framework and the front-end uses bootstrap and ApexChart. In general, this is an e-commerce platform selling prepared dishes, there are two roles of user: customer(including guest and signed-in customer) and administrator:
+#### This Ruby on Rails project is a dynamic e-commerce platform for prepared dishes, featuring robust functionalities such as a dish search engine for quick and easy browsing. It supports role-based authentication with separate login and sign-up options for customers and administrators, allowing seamless user and product management. The platform combines scalability, responsiveness, and security to deliver a user-friendly and efficient experience for all stakeholders in the prepared dishes marketplace.
 
 To run the application:
 ```
 rails server
 ```
+
 ## Screenshot of main pages
-Customer accessible pages:
+Customer-accessible pages:
 ![alt text](app/assets/images/mainpage.png)
 ![alt text](app/assets/images/order.png)
 ![alt text](app/assets/images/cart.png)
 ![alt text](app/assets/images/detail.png)
-Admin accessible pages:
+
+Admin-accessible pages:
 ![alt text](app/assets/images/admin-board.png)
 ![alt text](app/assets/images/admin-order.png)
 ![alt text](app/assets/images/admin-product.png)
